@@ -103,5 +103,10 @@ theme: aurora
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: git@github.com:ddvlhr/blog.git
-  branch: gh-pages
+  repo:
+    github:
+      url: git@github.com:ddvlhr/blog.git
+      branch: gh-pages
+    gitee:
+      url: git@gitee.com:ddvlhr/blog.git
+      branch: gh-pages
