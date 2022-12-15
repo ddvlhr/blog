@@ -1,10 +1,8 @@
 ---
-title: dotnet Dockerfile 部署
-header_image: https://picgo.ddvlhr.red/picgo/202211260135930.jpeg
-cover: https://picgo.ddvlhr.red/picgo/202211260135930.jpeg
-tags:
-  - dotnet
-  - docker
+title: Docker 部署 .NET 项目
+index_img: https://picgo.ddvlhr.red/picgo/202211260135930.jpeg
+banner_img: https://picgo.ddvlhr.red/picgo/202211260135930.jpeg
+tags: [.NET, Docker]
 ---
 ## 1.创建 Dockerfile 文件
 ``` dockerfile

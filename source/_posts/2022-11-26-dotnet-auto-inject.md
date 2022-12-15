@@ -1,15 +1,11 @@
 ---
-title: "Auto Injecting Dependencies Attribute in .NET"
-abstract: Auto Injecting Dependencies Attribute in .NET
-header_image: https://picgo.ddvlhr.red/picgo/202211260135090.jpeg
-cover: https://picgo.ddvlhr.red/picgo/202211260135090.jpeg
+title: ".NET 自定义自动依赖注入特性工具"
+index_img: https://picgo.ddvlhr.red/picgo/202211260135118.jpeg
+banner_img: https://picgo.ddvlhr.red/picgo/202211260135118.jpeg
 date: 2022/11/26
-tags:
-  - dotnet
-  - dependency-injection
-  - C#
+tags: [.NET, DI, C#]
 ---
-> #### 该 Attribute 为自定义自动依赖注入工具, 只需要在 class 中使用该 Attribute 即可以自动注入, 不必在 Program.cs 或者 Startup.cs 中手动注入. 
+#### 该 Attribute 为自定义自动依赖注入工具, 只需要在 class 中使用该 Attribute 即可以自动注入, 不必在 Program.cs 或者 Startup.cs 中手动注入. 
 ## 1.创建 InjectType 枚举类, 该枚举类定义三种生命周期, 分别为 Singleton, Scoped, Transient
 ``` csharp
 /// <summary>
