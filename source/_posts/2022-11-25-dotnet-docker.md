@@ -2,6 +2,7 @@
 title: Docker 部署 .NET 项目
 index_img: https://picgo.ddvlhr.red/picgo/202211260135930.jpeg
 banner_img: https://picgo.ddvlhr.red/picgo/202211260135930.jpeg
+excerpt: 使用 Dockerfile 在 docker 中部署 .NET 项目.
 tags: [.NET, Docker]
 ---
 ## 1.创建 Dockerfile 文件
@@ -43,7 +44,8 @@ CONTAINER_ID=`docker run -dit -p 7229:7229 --name=$DOCKER_NAME --restart=always 
 #docker logs -f $CONTAINER_ID
 ```
 ## 3.部署项目
-> #### 将发布后的文件夹上传到服务器后, 在项目文件夹下执行如下指令即可将项目部署到 docker 中
+将发布后的文件夹上传到服务器后, 在项目文件夹下执行如下指令即可将项目部署到 docker 中
+
 ``` shell
 $ sh start.sh
 ```

@@ -2,6 +2,7 @@
 title: .NET EFCore 迁移工具
 index_img: https://picgo.ddvlhr.red/picgo/202211260135130.jpeg
 banner_img: https://picgo.ddvlhr.red/picgo/202211260135130.jpeg
+excerpt: dotnet cli 中 使用 dotnet ef 工具实现数据库迁移.
 tags: [.NET, EntityFrameworkCore, Backend]
 ---
 #### 1.安装迁移工具
