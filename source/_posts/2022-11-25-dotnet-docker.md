@@ -4,6 +4,7 @@ index_img: https://picgo.ddvlhr.red/picgo/202211260135930.jpeg
 banner_img: https://picgo.ddvlhr.red/picgo/202211260135930.jpeg
 excerpt: 使用 Dockerfile 在 docker 中部署 .NET 项目.
 tags: [.NET, Docker]
+categories: [Backend]
 ---
 ## 1.创建 Dockerfile 文件
 ``` dockerfile

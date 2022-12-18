@@ -18,24 +18,24 @@ categories: [服务器]
 ## 1. 从服务器下载文件
 
 ```shell
-scp username@server:/path/filename /path(本地目录)
+$ scp username@server:/path/filename /path(本地目录)
 ```
 
 ## 2. 上传本地文件到服务器
 
 ```shell
-scp /path/filename username@server:/path
+$ scp /path/filename username@server:/path
 ```
 
-## 3. 从服务器下载整个目录
+##  $ sh start.shshell
 
 ```shell
-scp -r username@server:/remote_dir(远程目录) /local_dir(本地目录)
+$ scp -r username@server:/remote_dir(远程目录) /local_dir(本地目录)
 ```
 
 ## 4. 上传目录到服务器
 
 ```shell
-scp -r /local_dir(本地目录) username@server:/remote_dir(远程目录)
+$ scp -r /local_dir(本地目录) username@server:/remote_dir(远程目录)
 ```
 
