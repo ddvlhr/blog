@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>SSH 上传, 下载文件</title>
+    <link href="/post/2022-12-16-ssh-upload.html"/>
+    <url>/post/2022-12-16-ssh-upload.html</url>
+    
+    <content type="html"><![CDATA[<div class="note note-success">            <p>在 linux 上一般使用 scp 这个命令来通过 ssh 传输文件</p>          </div><div class="note note-warning">            <p>注: 目标服务器要开启写入权限</p>          </div><h2 id="1-从服务器下载文件"><a href="#1-从服务器下载文件" class="headerlink" title="1. 从服务器下载文件"></a>1. 从服务器下载文件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">scp username@server:/path/filename /path(本地目录)</span><br></code></pre></td></tr></table></figure><h2 id="2-上传本地文件到服务器"><a href="#2-上传本地文件到服务器" class="headerlink" title="2. 上传本地文件到服务器"></a>2. 上传本地文件到服务器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">scp /path/filename username@server:/path</span><br></code></pre></td></tr></table></figure><h2 id="sh-start-shshell"><a href="#sh-start-shshell" class="headerlink" title="$ sh start.shshell"></a>$ sh start.shshell</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">scp -r username@server:/remote_dir(远程目录) /local_dir(本地目录)</span><br></code></pre></td></tr></table></figure><h2 id="4-上传目录到服务器"><a href="#4-上传目录到服务器" class="headerlink" title="4. 上传目录到服务器"></a>4. 上传目录到服务器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">scp -r /local_dir(本地目录) username@server:/remote_dir(远程目录)</span><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>服务器</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>SSH</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Docker 部署 .NET 项目</title>
+    <link href="/post/2022-11-25-dotnet-docker.html"/>
+    <url>/post/2022-11-25-dotnet-docker.html</url>
+    
+    <content type="html"><![CDATA[<h2 id="1-创建-Dockerfile-文件"><a href="#1-创建-Dockerfile-文件" class="headerlink" title="1.创建 Dockerfile 文件"></a>1.创建 Dockerfile 文件</h2><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-keyword">FROM</span> mcr.microsoft.com/dotnet/aspnet:<span class="hljs-number">6.0</span> AS base<br><span class="hljs-keyword">COPY</span><span class="language-bash"> . /publish</span><br><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /publish</span><br><span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">80</span><br><br><span class="hljs-comment"># 指定容器运行端口</span><br><span class="hljs-comment"># EXPOSE 指定的端口无效, docker 还是会默认使用 80 端口,如果要使用其他端口,请使用如下指令</span><br><span class="hljs-keyword">ENV</span> ASPNETCORE_URLS=http://+:<span class="hljs-number">5001</span><br><br><span class="hljs-comment"># dotnet-project.dll 为项目编译后的 dll 文件</span><br><span class="hljs-keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="hljs-string">&quot;dotnet&quot;</span>, <span class="hljs-string">&quot;dotnet-project.dll&quot;</span>]</span><br></code></pre></td></tr></table></figure><h2 id="2-创建-start-sh-文件"><a href="#2-创建-start-sh-文件" class="headerlink" title="2.创建 start.sh 文件"></a>2.创建 start.sh 文件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">容器名称</span><br>APP=&quot;api&quot;<br>VERSION=&quot;v1&quot;<br>IMAGE=$APP:$VERSION<br>DOCKER_NAME=&quot;$APP_$VERSION&quot;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">Dockerfile 文件路径</span><br>APP_DIR=&quot;/home/apps/csharp/api/publish/Dockerfile&quot;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">项目编译后的 dll 文件路径</span><br>PUBLISH_DIR=&quot;/home/apps/csharp/api/publish&quot;<br>echo &quot;--- delete container and image ---&quot;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">停止并删除容器和镜像</span><br>docker stop $DOCKER_NAME<br>docker rm $DOCKER_NAME<br>docker rmi $IMAGE<br>echo &quot;+++ build docker images&quot;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">重新构建镜像</span><br>docker build -t $IMAGE .<br>echo &quot;--- run docker images ---&quot;<br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动容器</span><br>CONTAINER_ID=`docker run -dit -p 7229:7229 --name=$DOCKER_NAME --restart=always -v $PUBLISH_DIR:/publish $IMAGE`<br><span class="hljs-meta prompt_">#</span><span class="language-bash">docker logs -f <span class="hljs-variable">$CONTAINER_ID</span></span><br></code></pre></td></tr></table></figure><h2 id="3-部署项目"><a href="#3-部署项目" class="headerlink" title="3.部署项目"></a>3.部署项目</h2><p>将发布后的文件夹上传到服务器后, 在项目文件夹下执行如下指令即可将项目部署到 docker 中</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">sh start.sh</span><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Backend</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>.NET</tag>
+      
+      <tag>Docker</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>.NET EFCore 迁移工具</title>
+    <link href="/post/2022-11-25-migrations.html"/>
+    <url>/post/2022-11-25-migrations.html</url>
+    
+    <content type="html"><![CDATA[<h2 id="1-安装迁移工具"><a href="#1-安装迁移工具" class="headerlink" title="1.安装迁移工具"></a>1.安装迁移工具</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">dotnet tool install --global dotnet-ef</span><br></code></pre></td></tr></table></figure><h2 id="2-引入迁移工具"><a href="#2-引入迁移工具" class="headerlink" title="2.引入迁移工具"></a>2.引入迁移工具</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">dotnet add package Microsoft.EntityFrameworkCore.Design</span><br></code></pre></td></tr></table></figure><h2 id="3-初始化迁移工具"><a href="#3-初始化迁移工具" class="headerlink" title="3.初始化迁移工具"></a>3.初始化迁移工具</h2><p>migration-project-absolute-url 如果不想把 migrations 文件夹存放在运行项目中时,<br>请指定存放 migraitons 文件夹项目的绝对路径  </p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">dotnet ef migrations add migration-name --project migration-project-absolute-url</span> <br></code></pre></td></tr></table></figure><h2 id="4-更新数据库"><a href="#4-更新数据库" class="headerlink" title="4.更新数据库"></a>4.更新数据库</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">dotnet ef database update</span> <br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Backend</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>.NET</tag>
+      
+      <tag>EntityFrameworkCore</tag>
+      
+      <tag>Backend</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>.NET 自定义自动依赖注入特性工具</title>
+    <link href="/post/2022-11-26-dotnet-auto-inject.html"/>
+    <url>/post/2022-11-26-dotnet-auto-inject.html</url>
+    
+    <content type="html"><![CDATA[<blockquote><p>该 Attribute 为自定义自动依赖注入工具, 只需要在 class 中使用该 Attribute 即可以自动注入, 不必在 Program.cs 或者 Startup.cs 中手动注入. </p></blockquote><span id="more"></span><h2 id="1-创建-InjectType-枚举类"><a href="#1-创建-InjectType-枚举类" class="headerlink" title="1.创建 InjectType 枚举类"></a>1.创建 InjectType 枚举类</h2><p>该枚举类定义三种生命周期, 分别为 Singleton, Scoped, Transient.</p><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> 注入类型</span><br><span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span><br><span class="hljs-keyword">public</span> <span class="hljs-built_in">enum</span> InjectType<br>&#123;<br>    Scope,<br>    Single,<br>    Transient<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="2-创建-AutoInjectAttribute-cs-文件"><a href="#2-创建-AutoInjectAttribute-cs-文件" class="headerlink" title="2.创建 AutoInjectAttribute.cs 文件"></a>2.创建 AutoInjectAttribute.cs 文件</h2><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c#">[<span class="hljs-meta">AttributeUsage(AttributeTargets.Class, AllowMultiple = false)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">AutoInjectAttribute</span>: <span class="hljs-title">Attribute</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">AutoInjectAttribute</span>(<span class="hljs-params">Type interfaceType, InjectType injectType</span>)</span><br>    &#123;<br>        Type = interfaceType;<br>        InjectType = injectType;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> Type Type &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>    <span class="hljs-keyword">public</span> InjectType InjectType &#123; <span class="hljs-keyword">get</span>; <span class="hljs-keyword">set</span>; &#125;<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="3-创建-AutoInjectExtension-cs-文件"><a href="#3-创建-AutoInjectExtension-cs-文件" class="headerlink" title="3.创建 AutoInjectExtension.cs 文件"></a>3.创建 AutoInjectExtension.cs 文件</h2><p>该文件为自动注入扩展方法类.</p><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">AutoInjectExtension</span> &#123;<br>    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span><br>    <span class="hljs-comment"><span class="hljs-doctag">///</span> 自动注入所有的程序集有InjectAttribute标签</span><br>    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span><br>    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;param name=&quot;serviceCollection&quot;&gt;</span><span class="hljs-doctag">&lt;/param&gt;</span></span><br>    <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;returns&gt;</span><span class="hljs-doctag">&lt;/returns&gt;</span></span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> IServiceCollection <span class="hljs-title">AddAutoDi</span>(<span class="hljs-params"><span class="hljs-keyword">this</span> IServiceCollection serviceCollection</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">var</span> path = AppDomain.CurrentDomain.BaseDirectory;<br>        <span class="hljs-keyword">var</span> assemblies = Directory.GetFiles(path, <span class="hljs-string">&quot;*.dll&quot;</span>).Select(Assembly.LoadFrom).ToList();<br>        <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> assembly <span class="hljs-keyword">in</span> assemblies)<br>        &#123;<br>            <span class="hljs-keyword">var</span> types = assembly.GetTypes().Where(a =&gt; a.GetCustomAttribute&lt;AutoInjectAttribute&gt;() != <span class="hljs-literal">null</span>)<br>                .ToList();<br>            <span class="hljs-keyword">if</span> (types.Count &lt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">continue</span>;<br>            <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> type <span class="hljs-keyword">in</span> types)<br>            &#123;<br>                <span class="hljs-keyword">var</span> attr = type.GetCustomAttribute&lt;AutoInjectAttribute&gt;();<br>                <span class="hljs-keyword">if</span> (attr?.Type == <span class="hljs-literal">null</span>) <span class="hljs-keyword">continue</span>;<br>                <span class="hljs-keyword">switch</span> (attr.InjectType)<br>                &#123;<br>                    <span class="hljs-keyword">case</span> InjectType.Scope:<br>                        serviceCollection.AddScoped(attr.Type, type);<br>                        <span class="hljs-keyword">break</span>;<br>                    <span class="hljs-keyword">case</span> InjectType.Single:<br>                        serviceCollection.AddSingleton(attr.Type, type);<br>                        <span class="hljs-keyword">break</span>;<br>                    <span class="hljs-keyword">case</span> InjectType.Transient:<br>                        serviceCollection.AddTransient(attr.Type, type);<br>                        <span class="hljs-keyword">break</span>;<br>                    <span class="hljs-literal">default</span>:<br>                        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> ArgumentOutOfRangeException();<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> serviceCollection;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure><h2 id="4-注册扩展方法"><a href="#4-注册扩展方法" class="headerlink" title="4.注册扩展方法"></a>4.注册扩展方法</h2><p>在 Program.cs 或者 Startup.cs 中注册该扩展方法.</p><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c#">services.AddAutoDi();<br></code></pre></td></tr></table></figure><h2 id="5-使用"><a href="#5-使用" class="headerlink" title="5.使用"></a>5.使用</h2><p>在需要注入的类中使用该 Attribute.</p><figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c#">[<span class="hljs-meta">AutoInject(typeof(IUserService), InjectType.Scope)</span>]<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span>: <span class="hljs-title">IUserService</span> &#123;&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Backend</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>.NET</tag>
+      
+      <tag>DI</tag>
+      
+      <tag>C#</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
